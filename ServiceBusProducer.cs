@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Azure.Messaging.ServiceBus;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace ServiceBusProducer
 {
     public static class ServiceBusProducer
     {
-        private static readonly ServiceBusClient _serviceBusClient = new(Environment.GetEnvironmentVariable("SbnsConnString"));
+        private static readonly ServiceBusClient _serviceBusClient = new ServiceBusClient(Environment.GetEnvironmentVariable("ServiceBusHostName"), new DefaultAzureCredential());
         private static readonly ServiceBusSender _topicASender = _serviceBusClient.CreateSender(Environment.GetEnvironmentVariable("TopicName"));
 
 
@@ -66,6 +67,7 @@ namespace ServiceBusProducer
                 catch (Exception ex)
                 {
                     log.LogCritical(ex, "Couldn't produce any messages");
+                    return new OkObjectResult(ex.Message);
                 }
             }
 
