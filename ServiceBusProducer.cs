@@ -43,9 +43,6 @@ namespace ServiceBusProducer
                         for (int i = 0; i < numMessages; i++)
                         {
                             var message = new ServiceBusMessage($"Message {i}");
-
-                            await _topicASender.SendMessageAsync(message);
-
                             
                             if (!topicAMessageBatch.TryAddMessage(message))
                             {
