@@ -68,7 +68,7 @@ namespace ServiceBusProducer
                 }
             }
 
-            return new OkObjectResult($"Produced {numMessages} messages");
+            return new OkObjectResult($"{DateTime.UtcNow:yyyy-MM-dd-HH:mm:ss}: Produced {numMessages} messages");
         }
     }
 }
